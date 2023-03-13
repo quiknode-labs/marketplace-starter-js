@@ -3,8 +3,10 @@ import { Router } from 'express';
 const router = Router();
 
 router.post('/', (request, response) => {
-  // TODO: make a SQL query to make sure DB is up and running
-  response.send("OK")
+  // TODO: validate quicknode-id
+  response.status(200).json({
+    message: 'Welcome to the JSON-RPC API'
+  })
 });
 
 export default router;

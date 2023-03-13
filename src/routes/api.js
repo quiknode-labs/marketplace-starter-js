@@ -3,7 +3,10 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', (request, response) => {
-  response.send("OK")
+  // TODO: add API KEY Authentication
+  response.status(200).json({
+    message: 'Welcome to the API'
+  })
 });
 
 export default router;

@@ -2,8 +2,11 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/', (request, response) => {
-  // TODO: make a SQL query to make sure DB is up and running
+import models, { sequelize } from '../models';
+
+router.get('/', async (request, response) => {
+  const count = await models.Account.count();
+  console.log("Healthcheck: " + count)
   response.send("OK")
 });
 
