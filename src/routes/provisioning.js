@@ -45,7 +45,7 @@ router.post('/provision', basicAuth(authInfo), async (request, response) => {
   response.json({
       'status': 'success',
       // replace below with real URL for sso login
-      'dashboard-url': `${baseUrl}/dashboard/${request.body['quicknode-id']}`,
+      'dashboard-url': `${baseUrl}/dashboard`,
       'access-url': `${baseUrl}/api`, // Return null if not applicable
   })
 });
@@ -58,10 +58,10 @@ router.put('/update', basicAuth(authInfo), async (request, response) => {
   });
   if (account === null) {
     console.log("Could not find account with id: " + request.body['quicknode-id'])
-      response.status(404).json({
-        'status': 'error',
-        'message': 'Could not find account with id: ' + request.body['quicknode-id'],
-      })
+    response.status(404).json({
+      'status': 'error',
+      'message': 'Could not find account with id: ' + request.body['quicknode-id'],
+    })
   } else {
     console.log("Finding endpoint with id: " + request.body['endpoint-id'])
     const endpoint = await models.Endpoint.findOne({
@@ -95,7 +95,7 @@ router.put('/update', basicAuth(authInfo), async (request, response) => {
       response.json({
           'status': 'success',
           // replace below with real URL for sso login
-          'dashboard-url': `${baseUrl}/dashboard/${request.body['quicknode-id']}`,
+          'dashboard-url': `${baseUrl}/dashboard`,
           'access-url': `${baseUrl}/api`, // Return null if not applicable
       })
     }
