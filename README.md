@@ -56,7 +56,7 @@ For the commands below, the `--basic-auth` flag is the Base64 encoding of `usern
 You need to make sure to replace that with your valid credentials (as defined in your `.env` file).
 
 
-PUDD:
+Provisioning:
 
 ```sh
 ./qn-marketplace-cli pudd --base-url http://localhost:3030 --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
