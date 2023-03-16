@@ -1,4 +1,4 @@
-# qn-js-add-on
+# marketplace-starter-js
 
 This repo is an example of how to build a QuickNode Marketplace add-on using node.js, Express.js, and sequelize with PostgreSQL.
 
@@ -21,23 +21,29 @@ You can use the [qn-marketplace-cli](https://github.com/quiknode-labs/qn-marketp
 To obtain a basic auth string, you can use Ruby or your language of choice with your username and password, as such:
 
 ```ruby
-Base64.encode64("luc:password")
+Base64.encode64("username:password")
 ```
 
 PUDD:
 
 ```sh
-./qn-marketplace-cli pudd --base-url http://localhost:3030/provisioning --basic-auth bHVjOnBhc3N3b3Jk\n
+./qn-marketplace-cli pudd --base-url http://localhost:3030/provisioning --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
 ```
 
 SSO:
 
 ```sh
-./qn-marketplace-cli sso --basic-auth bHVjOnBhc3N3b3Jk\n --url http://localhost:3030/provisioning/provision --jwt-secret jwt-secret
+./qn-marketplace-cli sso --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ= --url http://localhost:3030/provisioning/provision --jwt-secret jwt-secret
 ```
 
 RPC:
 
 ```sh
-./qn-marketplace-cli rpc --url http://localhost:3030/provisioning/provision --rpc-method qn_test --rpc-url http://localhost:3030/rpc  --rpc-params "[\"abc\"]" --basic-auth bHVjOnBhc3N3b3Jk\n
+./qn-marketplace-cli rpc --url http://localhost:3030/provisioning/provision --rpc-method qn_test --rpc-url http://localhost:3030/rpc  --rpc-params "[\"abc\"]" --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
+```
+
+Healthcheck:
+
+```sh
+./qn-marketplace-cli healthcheck --url http://localhost:3030/healthcheck
 ```

@@ -2,21 +2,21 @@
   "development": {
     "username": "luc",
     "password": null,
-    "database": "qn_js_add_on_development",
+    "database": "marketplace_starter_js_development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "luc",
     "password": null,
-    "database": "qn_js_add_on_test",
+    "database": "marketplace_starter_js_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "luc",
     "password": null,
-    "database": "qn_js_add_on_production",
+    "database": "marketplace_starter_js_production",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
