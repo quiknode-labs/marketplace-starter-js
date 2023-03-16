@@ -90,10 +90,10 @@ jobs:
         run: ./cli/qn-marketplace-cli healthcheck --url http://localhost:3030/healthcheck
 
       - name: Conduct a PUDD test [REQUIRED]
-        run: ./cli/qn-marketplace-cli pudd --base-url http://localhost:3030/provisioning --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
+        run: ./cli/qn-marketplace-cli pudd --base-url http://localhost:3030 --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
 
       - name: Test RPC [OPTIONAL - remove from this yml file if your add-on does not have RPC methods]
-        run: ./cli/qn-marketplace-cli rpc --url http://localhost:3030/provisioning/provision --rpc-method qn_test --rpc-url http://localhost:3030/rpc  --rpc-params "[\"abc\"]" --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
+        run: ./cli/qn-marketplace-cli rpc --url http://localhost:3030/provision --rpc-method qn_test --rpc-url http://localhost:3030/rpc  --rpc-params "[\"abc\"]" --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
 
       - name: Test SSO [OPTIONAL - remove from this yml file if your add-on does not have a dashboard]
-        run: ./cli/qn-marketplace-cli sso --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ= --url http://localhost:3030/provisioning/provision --jwt-secret jwt-secret --email jon@example.com --name jon --org QuickNode
+        run: ./cli/qn-marketplace-cli sso --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ= --url http://localhost:3030/provision --jwt-secret jwt-secret --email jon@example.com --name jon --org QuickNode
