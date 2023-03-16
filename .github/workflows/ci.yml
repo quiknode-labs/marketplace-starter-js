@@ -1,0 +1,99 @@
+name: qn-marketplace-cli tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          PGPASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: marketplace_starter_js_development
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get install -y postgresql-client
+
+      - name: Check out source code
+        uses: actions/checkout@v2
+        with:
+          path: webapp
+
+      - name: Get dependencies
+        run: cd webapp && npm install
+
+      - name: Create .env file
+        run: |
+          cd webapp && cat > .env <<EOL
+          HTTP_PORT=3030
+          DATABASE=marketplace_starter_js_development
+          DATABASE_USER=postgres
+          DATABASE_PASSWORD=postgres
+          BASIC_AUTH_USERNAME=username
+          BASIC_AUTH_PASSWORD=password
+          QN_SSO_SECRET=jwt-secret
+          EOL
+
+      - name: Run database migrations
+        run: cd webapp && npx sequelize-cli db:migrate --migrations-path src/migrations
+
+      - name: Run database seeds
+        run: cd webapp && npx sequelize-cli db:seed:all  --seeders-path src/seeders
+
+      - name: Start the web app in the background
+        run: |
+          cd webapp && npm start &
+          sleep 3  # Give the web app some time to start
+
+      - name: Check out source code for qn-marketplace-cli
+        uses: actions/checkout@v2
+        with:
+          repository: quiknode-labs/qn-marketplace-cli
+          ref: main
+          path: cli
+
+      - name: Build qn-marketplace-cli
+        run: cd cli && go build
+
+      - name: Conduct a healthcheck [REQUIRED]
+        run: ./cli/qn-marketplace-cli healthcheck --url http://localhost:3030/healthcheck
+
+      - name: Conduct a PUDD test [REQUIRED]
+        run: ./cli/qn-marketplace-cli pudd --base-url http://localhost:3030/provisioning --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
+
+      - name: Test RPC [OPTIONAL - remove from this yml file if your add-on does not have RPC methods]
+        run: ./cli/qn-marketplace-cli rpc --url http://localhost:3030/provisioning/provision --rpc-method qn_test --rpc-url http://localhost:3030/rpc  --rpc-params "[\"abc\"]" --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ=
+
+      - name: Test SSO [OPTIONAL - remove from this yml file if your add-on does not have a dashboard]
+        run: ./cli/qn-marketplace-cli sso --basic-auth dXNlcm5hbWU6cGFzc3dvcmQ= --url http://localhost:3030/provisioning/provision --jwt-secret jwt-secret --email jon@example.com --name jon --org QuickNode
