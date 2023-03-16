@@ -21,7 +21,7 @@ app.use(
 app.use('/api', routes.api);
 app.use('/dashboard', routes.dashboard);
 app.use('/healthcheck', routes.healthcheck);
-app.use('/provisioning', routes.provisioning);
+app.use('/', routes.provisioning);
 app.use('/rpc', routes.rpc);
 
 
