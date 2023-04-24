@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Endpoints', [{
+    return queryInterface.bulkInsert('endpoints', [{
       quicknode_id: '1234567890',
       account_id: 1,
       chain: 'ethereum',
@@ -17,6 +17,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Endpoints', null, {});
+    return queryInterface.bulkDelete('endpoints', null, {});
   }
 };
