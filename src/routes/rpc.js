@@ -2,7 +2,8 @@ import { Router } from "express";
 
 const router = Router();
 
-import models, { sequelize } from "../models";
+import models from "../models";
+import RPCRequestTranslator from "../translator";
 
 router.post("/", async (request, response) => {
   console.log(request.body);
@@ -53,6 +54,11 @@ router.post("/", async (request, response) => {
     } else {
       // If you need to make a request to the QuickNode endpoint here,
       // then you can use endpoint.get('http_url') to get the URL of the endpoint.
+      const newTranslator = new RPCRequestTranslator();
+      const translatedRequestResponse = await newTranslator.translateRequest(
+        rpcMethod,
+        rpcParams
+      );
 
       response.status(200).json({
         id: 1,
@@ -60,6 +66,7 @@ router.post("/", async (request, response) => {
           message: "Welcome to the JSON-RPC API.",
           method: rpcMethod,
           params: rpcParams,
+          result: translatedRequestResponse,
         },
         jsonrpc: "2.0",
       });
