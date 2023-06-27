@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Accounts', [{
+    return queryInterface.bulkInsert('accounts', [{
       quicknode_id: '1234567890',
       plan: 'discover',
       is_test: true,
@@ -13,6 +13,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Accounts', null, {});
+    return queryInterface.bulkDelete('accounts', null, {});
   }
 };
