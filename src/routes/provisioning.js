@@ -34,8 +34,8 @@ router.post('/provision', basicAuth(authInfo), async (request, response) => {
       plan: request.body['plan'],
       chain: request.body['chain'],
       network: request.body['network'],
-      wss_url: request.body['wss_url'],
-      http_url: request.body['http_url'],
+      wss_url: request.body['wss-url'],
+      http_url: request.body['http-url'],
     }
   });
   console.log("Upserted endpoint with id: " + endpoint.get('id'))
@@ -86,8 +86,8 @@ router.put('/update', basicAuth(authInfo), async (request, response) => {
       endpoint.plan = request.body['plan']
       endpoint.chain = request.body['chain']
       endpoint.network = request.body['network']
-      endpoint.wss_url = request.body['wss_url']
-      endpoint.http_url = request.body['http_url']
+      endpoint.wss_url = request.body['wss-url']
+      endpoint.http_url = request.body['http-url']
       endpoint.is_test = request.headers['X-QN-TESTING'] === 'true'
       await endpoint.save();
 
