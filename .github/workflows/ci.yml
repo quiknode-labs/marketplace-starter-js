@@ -20,10 +20,11 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          PGPASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: marketplace_starter_js_development
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: marketplace_starter_js_development
+          DB_HOST: localhost
+          DB_PORT: 5432
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
