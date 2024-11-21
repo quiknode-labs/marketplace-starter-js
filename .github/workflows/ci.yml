@@ -57,9 +57,11 @@ jobs:
         run: |
           cd webapp && cat > .env <<EOL
           HTTP_PORT=3030
-          DATABASE=marketplace_starter_js_development
-          DATABASE_USER=postgres
-          DATABASE_PASSWORD=postgres
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: marketplace_starter_js_development
+          DB_HOST: localhost
+          DB_PORT: 5432
           BASIC_AUTH_USERNAME=username
           BASIC_AUTH_PASSWORD=password
           QN_SSO_SECRET=jwt-secret
